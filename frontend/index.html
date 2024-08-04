@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot Interface</title>
+    <title>SAGE - Your Chatbot</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,10 +18,27 @@
         .chat-container {
             width: 50%;
             max-width: 600px;
-            background: #fff;
+            background: #e6e6fa; /* Light shade of violet */
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .chat-header img {
+            width: 50px;
+            height: 50px;
+        }
+        .chat-header h1 {
+            font-size: 1.5em;
+            margin: 0;
         }
         .chat-box {
             display: flex;
@@ -29,11 +46,17 @@
             gap: 10px;
             overflow-y: auto;
             max-height: 400px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
         }
         .chat-message {
             padding: 10px;
             border-radius: 5px;
             background: #e0e0e0;
+            word-wrap: break-word;
         }
         .chat-message.user {
             align-self: flex-end;
@@ -44,10 +67,14 @@
             align-self: flex-start;
             background: #f1f1f1;
         }
+        .chat-message.bot p {
+            margin: 5px 0;
+        }
         .input-container {
             display: flex;
             gap: 10px;
             margin-top: 10px;
+            width: 100%;
         }
         .input-container input {
             flex: 1;
@@ -63,15 +90,25 @@
             color: #fff;
             cursor: pointer;
         }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
+        }
     </style>
 </head>
 <body>
     <div class="chat-container">
+        <div class="chat-header">
+            <img src="robot.png" alt="Chatbot">
+            <h1>SAGE CHATBOT</h1>
+        </div>
         <div class="chat-box" id="chat-box"></div>
         <div class="input-container">
             <input type="text" id="user-input" placeholder="Ask a question...">
             <button onclick="sendQuery()">Send</button>
         </div>
+        <div class="footer">Developed by NIKHIL KUMAR TIWARI.</div>
     </div>
     <script>
         async function sendQuery() {
@@ -101,7 +138,7 @@
                 console.log('Response from server:', data); // Log for debugging
                 const botMessage = document.createElement('div');
                 botMessage.className = 'chat-message bot';
-                botMessage.textContent = data.response.content; // Access the 'content' field correctly
+                botMessage.innerHTML = data.response; // Set innerHTML to render HTML content
                 chatBox.appendChild(botMessage);
             } catch (error) {
                 console.error('Error:', error);
@@ -117,3 +154,4 @@
     </script>
 </body>
 </html>
+
