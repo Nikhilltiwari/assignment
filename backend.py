@@ -39,17 +39,17 @@ llm = ChatGroq(
 )
 
 def format_to_html(text):
-    text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text)  # Bold
-    text = re.sub(r'\*(.*?)\*', r'<em>\1</em>', text)  # Italic
-    text = text.replace('\n', '<br>')  # New lines to <br>
+    text = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', text) 
+    text = re.sub(r'\*(.*?)\*', r'<em>\1</em>', text)  
+    text = text.replace('\n', '<br>')  
     return text
 
 def get_response(user_input):
     prompt = prompt_template.format(user_input=user_input)
     response = llm.invoke(prompt)
-    response_text = response.content  # Extract the content from the AIMessage object
-    print("Generated response:", response_text)  # Print response for debugging
-    formatted_response = format_to_html(response_text)  # Format response to HTML
+    response_text = response.content 
+    print("Generated response:", response_text) 
+    formatted_response = format_to_html(response_text)  
     return formatted_response
 
 @app.post("/query")
@@ -57,7 +57,7 @@ async def query(request: QueryRequest):
     response = get_response(request.user_input)
     return {"response": response}
 
-# Mount the frontend directory to serve static files
+
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
 if __name__ == "__main__":
